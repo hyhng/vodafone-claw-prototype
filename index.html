@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script>(function(){var q=location.search,d=document.documentElement,n=/[?&]frame=1/.test(q)?false:/[?&]native=1/.test(q)?true:(innerWidth<=600||(matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<=600));if(n)d.classList.add('native')})()</script>
+<script>(function(){var q=location.search,d=document.documentElement,n=/[?&]frame=1/.test(q)?false:/[?&]native=1/.test(q)?true:(innerWidth<=600||(matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<=600));if(n)d.classList.add('native');var pv=function(e){e.preventDefault()};['gesturestart','gesturechange','gestureend'].forEach(function(t){document.addEventListener(t,pv,{passive:false})});document.addEventListener('touchmove',function(e){if(e.touches.length>1||(e.scale&&e.scale!==1))e.preventDefault()},{passive:false});var lt=0;document.addEventListener('touchend',function(e){var t=Date.now();if(t-lt<320&&!e.target.closest('button,.joy,.stage,.giftwrap,.coach,.slide'))e.preventDefault();lt=t},{passive:false});document.addEventListener('dblclick',pv,{passive:false})})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
 <title>Vodafone × Disney+ – Mobile 2v1 prototyp</title>
 <style>
 :root{--red:#e60000;--red-p:#bd0000;--ink:#25282b;--ink-2:#1a1c1e;--ink-3:#33373a;--g1:#f2f2f2;--g4:#bebebe;--g7:#7e7e7e;--line:rgba(255,255,255,.14);--bg:#000;--bg-2:#141414;--bg-3:#222;--r:12px;--r-s:8px;--btn-r:12px;--green:#25282b;--font:"Vodafone","Inter",-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{margin:0;height:100%;background:#111214;color:#fff;font-family:var(--font);overflow:hidden;-webkit-user-select:none;user-select:none;-webkit-font-smoothing:antialiased}
 button{font-family:inherit}
 #app{height:100%;display:flex;align-items:center;justify-content:center;gap:32px;padding:16px}
@@ -170,6 +171,8 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
 #m7.bgoff .m6bg,#m7.bgoff .m6light{opacity:0}
 #m7.fromgift .voucher{animation:none}
 #m7.fromgift .m7h{animation:m6up .5s .75s ease-out both}
+#m7.on .v-hint{animation:m6up .5s .45s ease-out both}
+#m7.fromgift .v-hint{animation:m6up .5s 1s ease-out both}
 #m7.fromgift .m7foot{animation:m6fade .5s .9s both}
 #m6 .giftzone{transition:opacity .45s .45s,transform .55s .4s}
 #m6.out,#m6.out .giftzone{animation:none!important}
@@ -195,6 +198,9 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
 .v-clock{font-size:40px;line-height:40px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .v-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:12px;color:var(--g7);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .v-meta span{display:flex;align-items:center;gap:6px}
+.v-clock,.v-meta span{white-space:nowrap}
+.v-clock{font-size:24px!important;line-height:28px!important;letter-spacing:-.01em!important}
+@media (max-width:350px){.v-clock{font-size:22px!important}}
 .v-meta #vId{color:var(--ink);font-size:16px;letter-spacing:.04em}
 .v-sec{position:relative;margin:0 -18px;height:36px;overflow:hidden;background:linear-gradient(90deg,#b80000 0%,#e60000 14%,#ff3d5e 26%,#e60000 38%,#b80000 50%,#e60000 64%,#ff3d5e 76%,#e60000 88%,#b80000 100%);background-size:200% 100%;animation:secBg 6s linear infinite}
 @keyframes secBg{from{background-position:0 0}to{background-position:-200% 0}}
@@ -213,7 +219,7 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
 .expired .v-stamp{background:var(--g7)}.expired .v-stamp small{color:#fff}
 .done .voucher>:not(.v-stamp),.expired .voucher>:not(.v-stamp){opacity:.35}
 .done .pulse,.expired .pulse{animation:none;background:var(--g4)}
-.v-hint{font-size:20px;line-height:24px;text-align:left;margin:4px 0 0;font-weight:700;letter-spacing:-.01em}
+.v-hint{font-size:20px;line-height:24px;text-align:center;margin:4px 0 0;font-weight:700;letter-spacing:-.01em;color:#fff}
 .v-status{font-size:14px;color:rgba(255,255,255,.85);display:flex;align-items:center;gap:8px}
 .v-status i{width:8px;height:8px;border-radius:50%;background:#fff;animation:pl 1s infinite}
 .done .v-status i,.expired .v-status i{animation:none}
@@ -293,17 +299,17 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
     <section class="scr on" id="m1">
       <img class="lg-mark" data-logo="mark" alt="Vodafone">
       <div class="prog"><b id="progB"></b></div>
-      <div class="m1t">Připravujeme dárky</div>
+      <div class="m1t">Balíme dárky…</div>
     </section>
 
     <!-- M2 intro -->
     <section class="scr" id="m2">
       <div class="brandrow"><div class="lockup"><img class="lg-vf" data-logo="vfW" alt="Vodafone"><img class="lg-dp" data-logo="dpW" alt="Disney+"></div></div>
-      <h1>Chyť si<br>vánoční dárek</h1>
+      <h1>Chyťte si<br>vánoční dárek</h1>
       <ol class="rules">
-        <li><b>01</b>Zamiř na dárek</li>
-        <li><b>02</b>Stiskni CHYŤ</li>
-        <li><b>03</b>Rozbal dárek a ukaž personálu</li>
+        <li><b>01</b>Zamiřte na dárek</li>
+        <li><b>02</b>Stiskněte CHYŤ</li>
+        <li><b>03</b>Rozbalte ho a výhru ukažte prodejci</li>
       </ol>
       <button class="cta" id="bPlay">Hrát</button>
     </section>
@@ -321,14 +327,14 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
     </div></div>
 
     <div class="ov" id="cd"><div><span id="cdN">3</span><small id="cdS">Pokračujeme</small></div></div>
-    <div class="banner" id="net"><div class="spin"></div><div><b>Připojujeme se znovu…</b><br>Tvoje hra i výhra jsou v bezpečí.</div></div>
+    <div class="banner" id="net"><div class="spin"></div><div><b>Připojujeme se znovu…</b><br>Vaše hra i výhra jsou v bezpečí.</div></div>
 
     <!-- M6 unwrap -->
     <section class="scr" id="m6">
       <div class="m6bg" id="m6bg"></div><div class="m6light"></div>
-      <h2>Dárek je tvůj</h2>
+      <h2>Dárek je váš</h2>
       <div class="giftzone"><div class="m6floor"></div><div class="rays" id="rays"></div><div class="giftwrap" id="giftW"><div class="hero" id="hero"><canvas class="h-base" id="hClip"></canvas><img class="h-base h-full" id="hBase" alt=""><div class="glow" id="hGlow"></div><img class="h-lid" id="hLid" alt="Dárek"></div></div></div>
-      <div class="tap" id="m6tap">Ťukni a podívej se, co je uvnitř</div>
+      <div class="tap" id="m6tap">Ťukněte a podívejte se, co je uvnitř</div>
     </section>
 
     <!-- M7 prize / M8 předáno -->
@@ -340,10 +346,11 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
         <div class="v-prize" id="vPrize">Vánoční hrnek</div>
         <div class="v-art"><img id="vImg" alt=""></div>
         <div class="v-sec" id="vSec"><div class="v-run" id="vRun"></div><i class="v-holo"></i></div>
-        <div class="v-live"><span class="v-clock" id="vClock">00:00:00</span><div class="v-meta"><span id="vDate"></span><span id="vId">#A7K2</span></div></div>
+        <div class="v-live"><span class="v-clock" id="vClock"></span><div class="v-meta"><span>Kód výhry</span><span id="vId">#A7K2</span></div></div>
         <div class="v-stamp" id="vStamp">PŘEDÁNO<small id="vStampT"></small></div>
       </div>
-      <div class="slide" id="slide"><div class="knob" id="knob">→</div>Pro personál: přejeď a předej</div>
+      <p class="v-hint" id="vHint">Ukažte tuto obrazovku prodejci</p>
+      <div class="slide" id="slide"><div class="knob" id="knob">→</div>Pro prodejce: přejeďte a předejte</div>
       <div class="m7foot"><img class="lg-mini" data-logo="mark" alt="">everyone.connected</div>
     </section>
 
@@ -351,18 +358,18 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
     <section class="scr" id="e3">
       <div class="erri">!</div>
       <h2>Tento kód už neplatí</h2>
-      <p>Požádej personál o nový QR kód.</p>
+      <p>Požádejte prodejce o nový QR kód.</p>
     </section>
 
     <div class="sheet" id="pin">
-      <h3>Pro personál</h3>
-      <p>Zadej PIN prodejny pro potvrzení výdeje</p>
+      <h3>Pro prodejce</h3>
+      <p>Zadejte PIN prodejny a potvrďte výdej</p>
       <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
       <p class="perr" id="perr"></p>
       <div class="keys" id="keys"></div>
     </div>
 
-    <div class="ov" id="e4"><div class="rot"></div><b>Otoč telefon</b><span style="color:#bebebe;font-size:14px">Hra funguje jen na výšku.</span></div>
+    <div class="ov" id="e4"><div class="rot"></div><b>Otočte telefon</b><span style="color:#bebebe;font-size:14px">Hra funguje jen na výšku.</span></div>
     <canvas id="fx"></canvas>
   </div></div>
 
@@ -386,7 +393,7 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
     <label>Hit zóny (debug) <input type="checkbox" id="oDbg"></label>
     <h4>Simulace</h4>
     <div class="btns">
-      <button class="btn" id="sConfirm"><b>P2</b>Personál potvrdil výdej</button>
+      <button class="btn" id="sConfirm"><b>P2</b>Prodejce potvrdil výdej</button>
       <button class="btn" id="sStorno"><b>E9</b>Storno / timeout výhry</button>
       <button class="btn" id="sAway"><b>E6</b>Odchod z aplikace během hry</button>
       <button class="btn" id="sNet"><b>E7</b>Výpadek sítě</button>
@@ -575,7 +582,7 @@ function update(dt){
       if(mag>.1&&S.hint>0)S.hint-=dt;
       S.left-=dt;var sec=Math.ceil(S.left);
       if(sec<=5&&sec<S.lastTick&&sec>0){sfx.tick();S.lastTick=sec}
-      if(S.left<=0){S.left=0;toast('Čas vypršel – chytáme za tebe',1600);startGrab(true)}
+      if(S.left<=0){S.left=0;toast('Čas vypršel, chytáme za vás',1600);startGrab(true)}
     }
     var ts=persp(ring.y),ta=restAy();cl.s+=(ts-cl.s)*Math.min(1,dt*10);
     cl.vx=(ring.x-cl.ax)/Math.max(dt,.001);cl.ax=ring.x;cl.ay+=(ta-cl.ay)*Math.min(1,dt*10);
@@ -592,14 +599,14 @@ function update(dt){
     if(S.p>=1){if(S.miss){S.mode='missclose';S.p=0;return}S.mode='snap';S.p=0;S.removed=S.tg.id;renderStatic(S.removed);updateCatchable();S.s0=cl.s}
   }else if(m==='missclose'){
     S.p+=dt/.45;cl.arm=lerp(RIG.drop,RIG.closed,eOut(Math.min(1,S.p)));
-    if(S.p>=1){S.mode='missup';S.p=0;S.liftFrom=cl.ay;toast('Vedle! Zkus to znovu',1800);sfx.err();vib([20,60,20])}
+    if(S.p>=1){S.mode='missup';S.p=0;S.liftFrom=cl.ay;toast('Vedle. Zkuste to znovu',1800);sfx.err();vib([20,60,20])}
   }else if(m==='missup'){
     S.p+=dt/.8;var em=eIO(Math.min(1,S.p));cl.ay=lerp(S.liftFrom,restAy(),em);cl.s=lerp(cl.s,persp(ring.y),Math.min(1,dt*6));cl.arm=lerp(RIG.closed,RIG.open,em);
     if(S.p>=1){S.mode='aim';S.miss=false;$('timer').classList.remove('off');setCtl();
-      if(S.left<=0){toast('Čas vypršel – chytáme za tebe',1600);startGrab(true)}}
+      if(S.left<=0){toast('Čas vypršel, chytáme za vás',1600);startGrab(true)}}
   }else if(m==='snap'){
     S.p+=dt/.5;cl.arm=lerp(RIG.drop,RIG.closed,eOut(Math.min(1,Math.min(1,S.p)*1.6)));
-    if(S.p>=1){cl.hold=S.tg;cl.hsT=clamp(HGW/S.tg.w,.78,1);cl.hsM=1-(1-cl.hsT)*.35;cl.hs=cl.hsM;S.mode='lift';S.p=0;S.liftFrom=cl.ay;S.wobv=(Math.random()<.5?-1:1)*2.4;sfx.grab();vib(20);toast('Máš ho!')}
+    if(S.p>=1){cl.hold=S.tg;cl.hsT=clamp(HGW/S.tg.w,.78,1);cl.hsM=1-(1-cl.hsT)*.35;cl.hs=cl.hsM;S.mode='lift';S.p=0;S.liftFrom=cl.ay;S.wobv=(Math.random()<.5?-1:1)*2.4;sfx.grab();vib(20);toast('Máte ho!')}
   }else if(m==='lift'){
     S.p+=dt/.95;var e3=eIO(Math.min(1,S.p));cl.ay=lerp(S.liftFrom,Math.max(210,S.liftFrom-420),e3);cl.s=lerp(S.s0,1,e3*.5);cl.hs=lerp(cl.hsM,cl.hsT,e3);
     if(S.p>=1){S.mode='hold';S.p=0}
@@ -616,7 +623,7 @@ function update(dt){
     S.p+=dt/.45;S.flash=Math.max(0,S.flash-dt*2.2);
     if(S.p>=1){S.mode='won';toast('');go('m6')}
   }
-  var tt=clamp(-cl.vx/SP*.12,-.12,.12);cl.thv+=((tt-cl.th)*70-cl.thv*6)*dt;cl.th+=cl.thv*dt;
+  var tt=clamp(cl.vx/SP*.12,-.12,.12);cl.thv+=((tt-cl.th)*70-cl.thv*6)*dt;cl.th+=cl.thv*dt;
   S.wobv+=(-S.wob*60-S.wobv*3.2)*dt;S.wob+=S.wobv*dt;
 }
 
@@ -738,17 +745,17 @@ function obShot(k){
 }
 function obSteps(){
   var ctl={
-    A:['Zamiř na dárek','Kroužek nad dárky se pohybuje sám. Sleduj ho a počkej, až bude nad dárkem, který chceš.'],
-    B:['Zamiř na dárek','Joystickem vpravo dole posuneš kroužek nad dárek, který chceš.'+(opt.mag>0?' Kroužek se k dárkům lehce přichytí.':'')],
-    C:['Zamiř na dárek','Táhni prstem po scéně a posuň kroužek nad dárek, který chceš.']}[opt.mech];
+    A:['Zamiřte na dárek','Kroužek nad dárky se pohybuje sám. Počkejte, až bude nad tím, který chcete.'],
+    B:['Zamiřte na dárek','Joystickem vpravo dole posunete kroužek nad dárek, který chcete.'+(opt.mag>0?' K dárkům se lehce přichytí.':'')],
+    C:['Zamiřte na dárek','Táhněte prstem po scéně a posuňte kroužek nad dárek, který chcete.']}[opt.mech];
   var grab=opt.grab==='exact'
-    ?'Chapadlo sjede přesně pod kroužek a dárek vytáhne. Když mineš, vrátí se nahoru a můžeš to zkusit znovu.'
-    :'Chapadlo sjede dolů a vytáhne dárek, který je nejblíž kroužku. Stačí mířit přibližně.';
+    ?'Chapadlo sjede přesně pod kroužek a dárek vytáhne. Když minete, vrátí se nahoru a můžete to zkusit znovu.'
+    :'Chapadlo sjede dolů a vytáhne dárek, který je kroužku nejblíž. Stačí mířit zhruba.';
   return [
     {k:'aim',h:ctl[0],p:ctl[1]},
     {k:'grab',h:'Stiskni CHYŤ',p:grab},
-    {k:'time',h:'Máš '+opt.time+' sekund',p:'Čas běží nahoře na obrazovce. Když vyprší, chytíme dárek za tebe. O výhru nepřijdeš.'},
-    {k:'win',h:'Rozbal dárek a ukaž personálu',p:'Ťukni na dárek a rozbal ho. Obrazovku s výhrou pak ukaž personálu na prodejně.'}
+    {k:'time',h:'Máte '+opt.time+' sekund',p:'Čas běží nahoře na obrazovce. Když vyprší, chytíme dárek za vás. O výhru nepřijdete.'},
+    {k:'win',h:'Rozbalte dárek a výhru ukažte prodejci',p:'Ťukněte na dárek a podívejte se, co je uvnitř. Obrazovku s výhrou pak ukažte prodejci, který vám ji předá.'}
   ];
 }
 var OB={i:0};
@@ -758,7 +765,7 @@ function obRender(dir){
   $('obProg').innerHTML=st.map(function(_,k){return '<i'+(k<=OB.i?' class="on"':'')+'></i>'}).join('');
   obShot(c.k);
   $('obEye').textContent='Jak hrát · '+(OB.i+1)+'/'+n;$('obH').textContent=nb(c.h);$('obP').textContent=nb(c.p);
-  $('obNext').textContent=OB.i===n-1?'Hrát hru':'Další';
+  $('obNext').textContent=OB.i===n-1?'Začít hrát':'Další';
   var b=$('obBody');b.classList.remove('anim','back');if(dir){void b.offsetWidth;b.classList.add('anim');if(dir<0)b.classList.add('back')}
 }
 function obGo(d){
@@ -767,7 +774,7 @@ function obGo(d){
   if(d<0&&OB.i===0){sfx.tap();go('m2');return}
   OB.i+=d;sfx.tap();vib(8);obRender(d);
 }
-var HINT={A:'Ťukni na CHYŤ ve správnou chvíli',B:'Posuň kroužek na dárek',C:'Táhni prstem po scéně'};
+var HINT={A:'Ťukněte na CHYŤ ve správnou chvíli',B:'Posuňte kroužek nad dárek',C:'Táhněte prstem po scéně'};
 var clockT=0,loadDone=false;
 function showOnly(id){qa('.scr').forEach(function(s){s.classList.toggle('on',s.id===id||s.classList.contains('keep'))});$('m3').classList.remove('on')}
 var heroCur=null;
@@ -820,16 +827,15 @@ function setVoucher(st){
   S.vstate=st;var m7=$('m7');m7.classList.toggle('done',st==='done');m7.classList.toggle('expired',st==='expired');
   clearInterval(clockT);
   if(st==='wait'){
-    $('m7h').textContent='Gratulujeme!';
-    $('vClock').textContent=nowStr(true);clockT=setInterval(function(){$('vClock').textContent=nowStr(true)},1000);
+    $('m7h').textContent='Gratulujeme!';$('vHint').textContent='Ukažte tuto obrazovku prodejci';
     var dd=new Date(),ds=dd.getDate()+'. '+(dd.getMonth()+1)+'.',one='<span>Platná výhra</span><span>'+S.pid+'</span><span>'+ds+'</span><span>Vodafone × Disney+</span>';
-    $('vDate').textContent=ds;$('vRun').innerHTML=one+one+one+one;
+    $('vClock').textContent=dd.getDate()+'. '+(dd.getMonth()+1)+'. '+dd.getFullYear();$('vRun').innerHTML=one+one+one+one;
     resetKnob();
   }else if(st==='done'){
-    $('m7h').textContent='Předáno';$('vStamp').firstChild.nodeValue='PŘEDÁNO';$('vStampT').textContent=nowStr(false);
+    $('m7h').textContent='Předáno';$('vHint').textContent='Užijte si ho. Krásné Vánoce!';$('vStamp').firstChild.nodeValue='PŘEDÁNO';$('vStampT').textContent=nowStr(false);
     
   }else{
-    $('m7h').textContent='Výhra vypršela';$('vStamp').firstChild.nodeValue='VYPRŠELO';$('vStampT').textContent=nowStr(false);
+    $('m7h').textContent='Výhra vypršela';$('vHint').textContent='Obraťte se prosím na prodejce.';$('vStamp').firstChild.nodeValue='VYPRŠELO';$('vStampT').textContent=nowStr(false);
     
   }
 }
@@ -881,7 +887,7 @@ var pinV='';
     if(v==='x'){$('pin').classList.remove('on');resetKnob();return}
     if(v==='<'){pinV=pinV.slice(0,-1)}else if(pinV.length<4){pinV+=v;sfx.tap()}
     drawDots();
-    if(pinV.length===4){if(pinV==='1234'){setTimeout(function(){$('pin').classList.remove('on');confirmed()},180)}else{sfx.err();vib(120);$('perr').textContent='Špatný PIN, zkus to znovu';var d=$('dots');d.classList.remove('err');void d.offsetWidth;d.classList.add('err');setTimeout(function(){pinV='';drawDots()},400)}}
+    if(pinV.length===4){if(pinV==='1234'){setTimeout(function(){$('pin').classList.remove('on');confirmed()},180)}else{sfx.err();vib(120);$('perr').textContent='Špatný PIN, zkuste to znovu';var d=$('dots');d.classList.remove('err');void d.offsetWidth;d.classList.add('err');setTimeout(function(){pinV='';drawDots()},400)}}
   })})();
 function drawDots(){qa('#dots i').forEach(function(d,i){d.classList.toggle('f',i<pinV.length)})}
 function openPin(){pinV='';drawDots();$('perr').textContent='';$('pin').classList.add('on')}
@@ -893,7 +899,7 @@ function resumeCountdown(label){
   var iv=setInterval(function(){n--;if(n<=0){clearInterval(iv);el.classList.remove('on');S.paused=false;setCtl();return}$('cdN').textContent=n;sfx.tick()},700);
 }
 document.addEventListener('visibilitychange',function(){if(document.hidden){pauseGame()}else if(S.paused&&!$('net').classList.contains('on')){resumeCountdown()}});
-$('sAway').onclick=function(){if(!pauseGame()){toast('E6 funguje během hry (M4)',1600);return}$('cdN').textContent='II';$('cdS').textContent='Hra pozastavena';$('cd').classList.add('on');setTimeout(function(){resumeCountdown('Vítej zpět')},1400)};
+$('sAway').onclick=function(){if(!pauseGame()){toast('E6 funguje během hry (M4)',1600);return}$('cdN').textContent='II';$('cdS').textContent='Hra pozastavena';$('cd').classList.add('on');setTimeout(function(){resumeCountdown('Vítejte zpět')},1400)};
 $('sNet').onclick=function(){var p=pauseGame();$('net').classList.add('on');setTimeout(function(){$('net').classList.remove('on');if(p)resumeCountdown('Připojeno')},2400)};
 $('sRot').onclick=function(){$('e4').classList.add('on')};
 $('e4').addEventListener('click',function(){this.classList.remove('on')});
