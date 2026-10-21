@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script>(function(){var q=location.search,d=document.documentElement,n=/[?&]frame=1/.test(q)?false:/[?&]native=1/.test(q)?true:(innerWidth<=600||(matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<=600));if(n)d.classList.add('native')})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
 <title>Vodafone × Disney+ – Mobile 2v1 prototyp</title>
@@ -15,7 +17,16 @@ button{font-family:inherit}
 #app{height:100%;display:flex;align-items:center;justify-content:center;gap:32px;padding:16px}
 .device{position:relative;height:min(844px,calc(100vh - 32px));aspect-ratio:390/844;border-radius:54px;padding:12px;background:#1c1c20;box-shadow:0 0 0 1px #34343a,0 30px 80px #000c;flex:none}
 .screen{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;background:var(--bg);isolation:isolate}
-.native #app{padding:0}
+.native #app{padding:0;position:fixed;inset:0;height:auto}
+.native,.native body{background:#000;overscroll-behavior:none}
+/* menší telefony */
+@media (max-height:740px){.native h1{font-size:36px;line-height:36px;margin-bottom:14px}.native .rules li{padding:10px 0;font-size:16px}
+  .native .ob-prev{height:140px}.native .ob-body{min-height:330px}.native .coach{padding:16px 16px 14px}.native .coach h3{font-size:22px;line-height:26px}.native .ob-nav{margin-top:14px}
+  .native .giftwrap{width:240px;height:224px}.native .hero{width:232px}.native #m6 h2{font-size:36px;line-height:40px}
+  .native .v-art{height:112px}.native .v-art img{height:100px}.native .v-prize{font-size:28px;line-height:30px;margin-bottom:10px}.native .v-clock{font-size:34px;line-height:34px}.native .m7h{font-size:30px!important;line-height:34px!important}
+  .native .catch.big{height:56px}.native .catch.round{width:96px;height:96px}.native .joy{width:120px;height:120px}}
+@media (max-height:620px){.native .ob-prev{height:110px}.native .ob-body{min-height:300px}.native .coach p{font-size:15px;line-height:21px}}
+@media (max-width:350px){.native h1{font-size:32px;line-height:32px}.native .scr{padding-left:18px;padding-right:18px}.native .v-clock{font-size:30px}.native .lockup.sm .lg-dp{height:20px}}
 .native .device{width:100%;height:100%;aspect-ratio:auto;padding:0;border-radius:0;box-shadow:none}
 .native .screen{border-radius:0}
 /* ---------- type ---------- */
@@ -256,7 +267,7 @@ h1{font-size:42px;line-height:40px;font-weight:800;margin:0 0 20px;letter-spacin
 .native .panel.open{transform:none}
 .native .pclose{display:block;float:right;background:none;border:0;color:#aaa;font-size:14px}
 .native #gear{display:flex;position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;z-index:50;width:38px;height:38px;border-radius:50%;border:0;background:rgba(10,10,12,.55);align-items:center;justify-content:center}
-@media (max-width:760px){body:not(.native) .panel{display:none}}
+@media (max-width:760px){html:not(.native) .panel{display:none}}
 </style>
 </head>
 <body>
@@ -404,7 +415,7 @@ function eIO(t){return .5-.5*Math.cos(Math.PI*t)}
 function eBack(t){var c1=1.9,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}
 
 var NATIVE=innerWidth<=600||(matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<=600);
-if(NATIVE)document.body.classList.add('native');
+NATIVE=document.documentElement.classList.contains('native');
 
 /* ---------- audio + haptika ---------- */
 var AC=null;
